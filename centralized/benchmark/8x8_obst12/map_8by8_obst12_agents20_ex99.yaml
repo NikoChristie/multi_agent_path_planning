@@ -74,3 +74,4 @@ map:
     - !!python/tuple [2, 5]
     - !!python/tuple [5, 2]
     - !!python/tuple [7, 1]
+dynamic_obstacles: {}

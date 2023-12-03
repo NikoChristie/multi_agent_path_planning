@@ -12,8 +12,10 @@ import yaml
 from math import fabs
 from itertools import combinations
 from copy import deepcopy
+import time
 
-from cbs.a_star import AStar
+#from cbs.a_star import AStar
+from a_star import AStar
 
 class Location(object):
     def __init__(self, x=-1, y=-1):
@@ -309,10 +311,12 @@ class CBS(object):
 
 
 def main():
+    
     parser = argparse.ArgumentParser()
     parser.add_argument("param", help="input file containing map and obstacles")
     parser.add_argument("output", help="output file with the schedule")
     args = parser.parse_args()
+
 
     # Read from input file
     with open(args.param, 'r') as param_file:
@@ -327,6 +331,7 @@ def main():
 
     env = Environment(dimension, agents, obstacles)
 
+    start = time.time()
     # Searching
     cbs = CBS(env)
     solution = cbs.search()
@@ -336,6 +341,7 @@ def main():
 
     # Write to output file
     output = dict()
+    output['time'] = time.time() - start
     output["schedule"] = solution
     output["cost"] = env.compute_solution_cost(solution)
     with open(args.output, 'w') as output_yaml:

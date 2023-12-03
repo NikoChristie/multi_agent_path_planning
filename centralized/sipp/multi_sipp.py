@@ -13,6 +13,7 @@ import yaml
 from math import fabs
 from graph_generation import SippGraph, State
 from sipp import SippPlanner
+import time
 
 def main():
     parser = argparse.ArgumentParser()
@@ -25,12 +26,16 @@ def main():
     with open(args.map, 'r') as map_file:
         try:
             map = yaml.load(map_file, Loader=yaml.FullLoader)
+            if 'dynamic_obstacles' not in map.keys():
+                map['dynamic_obstacles'] = {}
         except yaml.YAMLError as exc:
             print(exc)
 
     # Output file
     output = dict()
     output["schedule"] = dict()
+
+    start = time.time()
 
     for i in range(len(map["agents"])):
         sipp_planner = SippPlanner(map,i)
@@ -39,11 +44,13 @@ def main():
             plan = sipp_planner.get_plan()
             output["schedule"].update(plan)
             map["dynamic_obstacles"].update(plan)
+            output["time"] = time.time() - start 
 
             with open(args.output, 'w') as output_yaml:
                 yaml.safe_dump(output, output_yaml)  
         else: 
             print("Plan not found")
+
 
 
 if __name__ == "__main__":

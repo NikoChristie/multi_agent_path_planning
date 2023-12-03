@@ -60,6 +60,7 @@ class SippGraph(object):
         self.dimensions = map["map"]["dimensions"]
 
         self.obstacles = [tuple(v) for v in map["map"]["obstacles"]]        
+        #self.dyn_obstacles = map.get("dynamic_obstacles", {})
         self.dyn_obstacles = map["dynamic_obstacles"]
 
         self.sipp_graph = {}
