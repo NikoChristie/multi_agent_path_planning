@@ -1,3 +1,15 @@
+## COMP 3190 Project
+
+to run my analysis code:
+``` 
+cd ./centralized/
+python3 analysis.py
+```
+
+the output will be saved to "output.csv"
+
+all other code is not my work
+
 # Multi-Agent path planning in Python
 
 ## Introduction
